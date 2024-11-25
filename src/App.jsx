@@ -1,12 +1,16 @@
 import './App.css'
 import { Header } from './components/Header';
 import { FooterPage } from './components/Footer'
+import { Products } from './components/Products';
 
 function App() {
 
   return (
     <>
-      <Header />
+      <div className="wrapper">
+        <Header />
+        <Products />
+      </div>
       <FooterPage />
     </>
   )
