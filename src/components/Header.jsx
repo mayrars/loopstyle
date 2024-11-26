@@ -2,7 +2,7 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 export function Header() {
     return (
-        <Navbar container className="bg-blue-950">
+        <Navbar className="bg-blue-950">
             <Navbar.Brand href="https://flowbite-react.com">
                 <span className="self-center whitespace-nowrap text-xl font-semibold text-white">Loop style</span>
             </Navbar.Brand>
