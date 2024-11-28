@@ -1,11 +1,12 @@
 "use client";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import { Link, NavLink } from "react-router-dom";
 export function Header() {
     return (
         <Navbar className="bg-blue-950">
-            <Navbar.Brand href="https://flowbite-react.com">
+            <Link to={"/"} className="text-white active:text-blue-300">
                 <span className="self-center whitespace-nowrap text-xl font-semibold text-white">Loop style</span>
-            </Navbar.Brand>
+            </Link>
             <div className="flex md:order-2">
                 <Dropdown
                 arrowIcon={false}
@@ -27,11 +28,9 @@ export function Header() {
                 <Navbar.Toggle />
             </div>
             <Navbar.Collapse className="text-white">
-                <Navbar.Link href="#" className="text-white active:text-blue-300" active>
-                Home
-                </Navbar.Link>
-                <Navbar.Link href="#" className="text-white">Categories</Navbar.Link>
-                <Navbar.Link href="#" className="text-white">Contact</Navbar.Link>
+                <NavLink to={"/"} className={({isActive}) => isActive ? 'text-blue-300': 'text-white'}>Home</NavLink>
+                <NavLink to={"/categories"} className={({isActive}) => isActive ? 'text-blue-300': 'text-white'}>Categories</NavLink>
+                <NavLink to={"/contact"} className={({isActive}) => isActive ? 'text-blue-300': 'text-white'}>Contact</NavLink>
             </Navbar.Collapse>
         </Navbar>
     )
