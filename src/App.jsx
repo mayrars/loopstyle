@@ -4,6 +4,8 @@ import { FooterPage } from './components/Footer'
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Categories from './pages/Categories';
+import PageNotFound from './pages/PageNotFound';
+import CategoriesList from './pages/CategoriesList';
 
 function App() {
 
@@ -14,7 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/categories" element={<Categories />}></Route>
-          <Route path="/*" element={<h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Ruta no valida</h1>}></Route>
+          <Route path="/categories/:id" element={<CategoriesList />}></Route>
+          <Route path="/*" element={<PageNotFound />}></Route>
         </Routes>
       </div>
       <FooterPage />
