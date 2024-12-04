@@ -1,5 +1,6 @@
 import { Card,Button } from "flowbite-react"
 import { useFetch } from "../hooks/useFetch"
+import { Link } from "react-router-dom"
 
 export function Products() {
     const {data, loading} = useFetch("https://api.escuelajs.co/api/v1/products?offset=12&limit=12")
@@ -18,9 +19,12 @@ export function Products() {
                         imgSrc={image}
                     >
                         <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">{product.title}</h2>
-                        <div className="grid grid-cols-2 gap-4">
-                            <p className="mt-2 text-4xl font-bold text-gray-700 dark:text-gray-300">${product.price}</p>
-                            <Button color="blue" pill size="lg">
+                        <div className="grid grid-cols-2 gap-4 justify-center align-middle">
+                            <div>
+                                <p><span className="text-sm">Price:</span></p>
+                                <p className="mt-2 text-4xl font-bold text-gray-700 dark:text-gray-300">${product.price}</p>
+                            </div>
+                            <Button as={Link} to={`/product/${product.id}`} color="blue" pill size="lg" className="h-12">
                                 Read more
                                 <svg className="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path
