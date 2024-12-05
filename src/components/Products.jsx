@@ -16,7 +16,7 @@ export function Products() {
                     <Card 
                         key={product.id} 
                         className="mt-10"
-                        imgSrc={image}
+                        renderImage={() =><Link to={`/product/${product.id}`}><img width={500} height={500} src={image} alt={product.title}/></Link>}
                     >
                         <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">{product.title}</h2>
                         <div className="grid grid-cols-2 gap-4 justify-center align-middle">

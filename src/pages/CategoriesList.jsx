@@ -10,7 +10,7 @@ export default function CategoriesList() {
       {loading && <p>Loading...</p>}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data && data.map(product => {
-          return <Card key={product.id} imgSrc={product.images[0]}>
+          return <Card key={product.id} renderImage={() =><Link to={`/product/${product.id}`}><img width={500} height={500} src={product.images[0]} alt={product.title}/></Link>}>
             <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">{product.title}</h2>
             <div className="grid grid-cols-2 gap-4">
                 <p className="mt-2 text-4xl font-bold text-gray-700 dark:text-gray-300">${product.price}</p>
