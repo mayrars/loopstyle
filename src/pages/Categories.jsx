@@ -1,13 +1,13 @@
 import { useFetch } from "../hooks/useFetch"
 import notAvailable from "../assets/Image_not_available.png"
-import {Card} from 'flowbite-react'
+import {Card, Spinner} from 'flowbite-react'
 import { Link } from "react-router-dom"
 export default function Categories() {
   const {data, loading} = useFetch("https://api.escuelajs.co/api/v1/categories")
   return <>
     <div className="container mx-auto mt-10 mb-10">
       <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-10">Categories</h1>
-      {loading && <p>Loading...</p>}
+      {loading && <div className="flex justify-center items-center"><Spinner aria-label="Loading" size="xl" color="purple"/></div>}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data && data.map(category => {
           return category.name !== "New Category" ? 

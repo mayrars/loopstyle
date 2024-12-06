@@ -1,4 +1,4 @@
-import { Card,Button } from "flowbite-react"
+import { Card,Button,Spinner } from "flowbite-react"
 import { useFetch } from "../hooks/useFetch"
 import { Link } from "react-router-dom"
 
@@ -7,7 +7,7 @@ export function Products() {
     return (
         <div className="container mx-auto mt-10">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Top products</h1>
-            {loading && <p>Loading...</p>}
+            {loading && <div className="flex justify-center items-center"><Spinner aria-label="Loading" size="xl" color="purple"/></div>}
             <div className="grid grid-cols-4 gap-4 mb-16">
             {data?.map(product => {
                 //get url product image array
