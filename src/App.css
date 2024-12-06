@@ -1,0 +1,16 @@
+.inputText {
+    text-align: center;
+    width: 80px;
+    border-radius: 0px;
+}
+.buttons{
+    font-size: 25px;
+    font-weight: bold;
+}
+.inputText input{
+    border-radius: 0px;
+    font-size: 25px;
+    line-height: 20px;
+    text-align: center;
+    height: 42px;
+}
