@@ -11,8 +11,8 @@ export default function Categories() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data && data.map(category => {
           return category.name !== "New Category" ? 
-            <Link to={`/categories/${category.id}`}>
-              <Card key={category.id}>
+            <Link to={`/categories/${category.id}`} key={`Category-list-${category.id}`}>
+              <Card>
                 <img src={category.image=='https://placeimg.com/640/480/any' ? notAvailable : category.image} />
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white mt-2">{category.name}</h2>
               </Card>
