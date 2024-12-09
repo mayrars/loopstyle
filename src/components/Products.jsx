@@ -14,7 +14,7 @@ export function Products() {
                 let image = product.images[0].replaceAll('["','').replaceAll('"]','')
                 return (
                     <Card 
-                        key={product.id} 
+                        key={`Product-${product.id}`} 
                         className="mt-10"
                         renderImage={() =><Link to={`/product/${product.id}`}><img width={500} height={500} src={image} alt={product.title}/></Link>}
                     >
