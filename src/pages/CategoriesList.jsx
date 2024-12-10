@@ -4,11 +4,12 @@ import { Link, useParams } from "react-router-dom"
 import { useFetch } from "../hooks/useFetch"
 import { Card, Button, Spinner } from "flowbite-react"
 import SideNavbar from "../components/SideNavbar"
+import Filters from "../components/Filters"
 export default function CategoriesList() {
   const params = useParams()
   const [filters, setFilters] = useState({
     minPrice: 0,
-    maxPrice: 100000
+    maxPrice: 100
   })
   const {data, loading} = useFetch(`https://api.escuelajs.co/api/v1/products/?categoryId=${params.id}`)
   console.log(data)
@@ -24,8 +25,9 @@ export default function CategoriesList() {
           <SideNavbar cat={params.id} />
         </div>
         <div className="col-start-3 col-end-11">
+          <Filters onChange={setFilters} />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-            {data && data.map(product => {
+            {filterProducts && filterProducts.map(product => {
               return <Card key={product.id} renderImage={() =><Link to={`/product/${product.id}`}><img width={500} height={500} src={product.images[0]} alt={product.title}/></Link>}>
                 <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">{product.title}</h2>
                 <div className="grid grid-cols-2 gap-4">
