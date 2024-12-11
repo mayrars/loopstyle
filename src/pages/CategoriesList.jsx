@@ -12,7 +12,6 @@ export default function CategoriesList() {
     maxPrice: 100
   })
   const {data, loading} = useFetch(`https://api.escuelajs.co/api/v1/products/?categoryId=${params.id}`)
-  console.log(data)
   const filterProducts = data!=null && data.filter(product => {
     return product.price >= filters.minPrice && product.price <= filters.maxPrice
   })
@@ -28,7 +27,8 @@ export default function CategoriesList() {
           <Filters onChange={setFilters} />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
             {filterProducts && filterProducts.map(product => {
-              return <Card key={product.id} renderImage={() =><Link to={`/product/${product.id}`}><img width={500} height={500} src={product.images[0]} alt={product.title}/></Link>}>
+              let newImage = product.images[0].replaceAll('["','').replaceAll('"]','')
+              return <Card key={`Product-${product.id}`} renderImage={() =><Link to={`/product/${product.id}`}><img width={500} height={500} src={newImage} alt={product.title}/></Link>}>
                 <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">{product.title}</h2>
                 <div className="grid grid-cols-2 gap-4">
                     <div>

@@ -13,9 +13,10 @@ export default function Product(){
     const params = useParams();
     const {data, loading} = useFetch(`https://api.escuelajs.co/api/v1/products/${params.id}`)
     const images = (data && data.images ? data.images : []).map(image => {
+        let newImage = image.replaceAll('["','').replaceAll('"]','')
         return {
-            original: image,
-            thumbnail: image
+            original: newImage,
+            thumbnail: newImage
         };
     });
 
@@ -29,7 +30,7 @@ export default function Product(){
                 <div>
                     <div className="grid grid-cols-2 gap-8">
                         <div>
-                            <ImageGallery items={images} infinite="true" autoPlay="true" showBullets="true"/>
+                            { images.length==0 ? <img src="../assets/Image_not_available.png" /> : <ImageGallery items={images} infinite="true" autoPlay="true" showBullets="true"/> }
                         </div>
                         <div>
                             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-5">{data.title}</h1>
