@@ -5,16 +5,23 @@ import { useFetch } from "../hooks/useFetch"
 import { Card, Button, Spinner } from "flowbite-react"
 import SideNavbar from "../components/SideNavbar"
 import Filters from "../components/Filters"
-export default function CategoriesList() {
-  const params = useParams()
+function useFilters(products){
   const [filters, setFilters] = useState({
     minPrice: 0,
     maxPrice: 100
   })
-  const {data, loading} = useFetch(`https://api.escuelajs.co/api/v1/products/?categoryId=${params.id}`)
-  const filterProducts = data!=null && data.filter(product => {
+  const filterProducts = products!=null && products.filter(product => {
     return product.price >= filters.minPrice && product.price <= filters.maxPrice
   })
+
+  return {filterProducts, setFilters}
+}
+
+export default function CategoriesList() {
+  const params = useParams()  
+  const {data, loading} = useFetch(`https://api.escuelajs.co/api/v1/products/?categoryId=${params.id}`)
+  const {filterProducts, setFilters} = useFilters(data)
+  
   return <>
     <div className="container mx-auto mt-10 mb-10">
       <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-10"></h1>
