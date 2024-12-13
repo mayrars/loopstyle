@@ -1,25 +1,24 @@
 
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { useFetch } from "../hooks/useFetch"
 import { Card, Button, Spinner } from "flowbite-react"
 import SideNavbar from "../components/SideNavbar"
 import Filters from "../components/Filters"
+import { FiltersContext } from "../context/filters"
 function useFilters(products){
-  const [filters, setFilters] = useState({
-    minPrice: 0,
-    maxPrice: 100
-  })
+  const {filters, setFilters} = useContext(FiltersContext)
   const filterProducts = products!=null && products.filter(product => {
     return product.price >= filters.minPrice && product.price <= filters.maxPrice
   })
-
+  console.log(filterProducts)
   return {filterProducts, setFilters}
 }
 
 export default function CategoriesList() {
   const params = useParams()  
   const {data, loading} = useFetch(`https://api.escuelajs.co/api/v1/products/?categoryId=${params.id}`)
+  
   const {filterProducts, setFilters} = useFilters(data)
   
   return <>
