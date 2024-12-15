@@ -1,25 +1,15 @@
-
-import { useContext, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { useFetch } from "../hooks/useFetch"
 import { Card, Button, Spinner } from "flowbite-react"
 import SideNavbar from "../components/SideNavbar"
 import Filters from "../components/Filters"
-import { FiltersContext } from "../context/filters"
-function useFilters(products){
-  const {filters, setFilters} = useContext(FiltersContext)
-  const filterProducts = products!=null && products.filter(product => {
-    return product.price >= filters.minPrice && product.price <= filters.maxPrice
-  })
-  console.log(filterProducts)
-  return {filterProducts, setFilters}
-}
+import {useFilters} from "../hooks/useFilters"
 
 export default function CategoriesList() {
   const params = useParams()  
   const {data, loading} = useFetch(`https://api.escuelajs.co/api/v1/products/?categoryId=${params.id}`)
   
-  const {filterProducts, setFilters} = useFilters(data)
+  const {filterProducts} = useFilters(data)
   
   return <>
     <div className="container mx-auto mt-10 mb-10">
@@ -30,7 +20,7 @@ export default function CategoriesList() {
           <SideNavbar cat={params.id} />
         </div>
         <div className="col-start-3 col-end-11">
-          <Filters onChange={setFilters} />
+          <Filters />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
             {filterProducts && filterProducts.map(product => {
               let newImage = product.images[0].replaceAll('["','').replaceAll('"]','')
