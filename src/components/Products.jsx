@@ -10,9 +10,6 @@ export function Products() {
             {loading && <div className="flex justify-center items-center"><Spinner aria-label="Loading" size="xl" color="purple"/></div>}
             <div className="grid grid-cols-4 gap-4 mb-16">
             {data?.map(product => {
-                //get url product image array
-                let image = product.images[0].replaceAll('["','').replaceAll('"]','')
-                console.log(image)
                 return (
                     <CardProduct key={`Product-${product.id}`} product={product} />                    
                 )
