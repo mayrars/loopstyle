@@ -1,12 +1,15 @@
 import { Card,Button } from "flowbite-react"
 import { Link } from "react-router-dom"
-export default function CardProduct(product) {
-    console.log(product)
-  return (
+// eslint-disable-next-line react/prop-types
+export default function CardProduct({product}) {
+    // eslint-disable-next-line react/prop-types
+    let image = product.images[0].replaceAll('["','').replaceAll('"]','')
+    return (
     <>
         <Card 
             className="mt-10"
             renderImage={() =><Link to={`/product/${product.id}`}><img width={500} height={500} src={image} alt={product.title}/></Link>}
+            
         >
             <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">{product.title}</h2>
             <div className="grid grid-cols-2 gap-4 justify-center align-middle">
