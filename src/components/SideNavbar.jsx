@@ -1,8 +1,6 @@
 import { Sidebar, Spinner } from "flowbite-react";
 import { useFetch } from "../hooks/useFetch"
-import { Link } from "react-router-dom";
 export default function SideNavbar({ cat }) {
-  console.log(cat)
   const {data, loading} = useFetch(`https://api.escuelajs.co/api/v1/categories`)
   return (
     <>
