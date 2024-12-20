@@ -5,7 +5,7 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  const addToCart = (product) => {
+  const addToCart = product => {    
     const productCart = cart.findIndex(item => item.id === product.id);
     if(productCart>=0){
         const newCart = structuredClone(cart)
