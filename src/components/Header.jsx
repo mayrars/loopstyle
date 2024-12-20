@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, Dropdown, Navbar, Badge} from "flowbite-react";
+import { Avatar, Dropdown, Navbar} from "flowbite-react";
 import { Link, NavLink } from "react-router-dom";
 import './Cart.css'
 import { Cart } from "./Cart";
