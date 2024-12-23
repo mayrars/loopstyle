@@ -7,11 +7,12 @@ import Categories from './pages/Categories';
 import PageNotFound from './pages/PageNotFound';
 import CategoriesList from './pages/CategoriesList';
 import Product from './pages/Product';
+import { CartProvider } from './context/cart';
 
 function App() {
 
   return (
-    <>
+    <CartProvider>
       <div className="wrapper">
         <Header />
         <Routes>
@@ -23,7 +24,7 @@ function App() {
         </Routes>
       </div>
       <FooterPage />
-    </>
+    </CartProvider>
   )
 }
 
