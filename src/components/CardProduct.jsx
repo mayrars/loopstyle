@@ -1,14 +1,15 @@
+
 import { Card,Button } from "flowbite-react"
 import { Link } from "react-router-dom"
 import {useCart} from '../hooks/useCart.jsx'
 export default function CardProduct({product}) {
-    const {addToCart, cart} = useCart()
-    const checkProductInCart = product => {
+    const {addToCart, removeFromCart, cart} = useCart()
+    const productCart = product =>{
         return cart.some(item => item.id === product.id)
     }
+    const isProductInCart = productCart(product)
     // eslint-disable-next-line react/prop-types
     let image = product.images[0].replaceAll('["','').replaceAll('"]','')
-    const isProductInCart = checkProductInCart(product)
     return (
     <>
         <Card 
@@ -22,10 +23,15 @@ export default function CardProduct({product}) {
                     <p><span className="text-sm">Price:</span></p>
                     <p className="mt-2 text-4xl font-bold text-gray-700 dark:text-gray-300">${product.price}</p>
                 </div>
-                <button onClick={addToCart(product)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-12 h-12 {isProductInCart ? 'bg-red-200' : ''}}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFF" className="size-6">
-                        <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
-                    </svg>
+                <button onClick={()=>isProductInCart ? removeFromCart(product) : addToCart(product)} className={isProductInCart ? 'bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded w-12 h-12' : 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-12 h-12'}>
+                    {
+                        isProductInCart
+                        ? <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
+                            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M1.41 1.13L0 2.54l4.39 4.39 2.21 4.66-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h7.46l1.38 1.38c-.5.36-.83.95-.83 1.62 0 1.1.89 2 1.99 2 .67 0 1.26-.33 1.62-.84L21.46 24l1.41-1.41L1.41 1.13zM7 15l1.1-2h2.36l2 2H7zM20 4H7.12l2 2h9.19l-2.76 5h-1.44l1.94 1.94c.54-.14.99-.49 1.25-.97l3.58-6.49C21.25 4.82 20.76 4 20 4zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2z"/>
+                        </svg>
+                        : <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3v3zm-4 9c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-8.9-5h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4l-3.87 7H8.53L4.27 2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2z"/></svg>
+                    }
+                    
                 </button>
                 <Button as={Link} to={`/product/${product.id}`} color="blue" pill size="lg" className="h-12">Read more
                     <svg className="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
