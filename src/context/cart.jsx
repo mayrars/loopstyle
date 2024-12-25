@@ -1,37 +1,50 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
 
 export const CartContext = createContext();
 
-export function CartProvider ({ children }){
-  const [cart, setCart] = useState([]);
-
-  const addToCart = product => {    
-    const productCart = cart.findIndex(item => item.id === product.id);
-    if(productCart>=0){
-        const newCart = structuredClone(cart)
-        newCart[productCart].quantity += 1;
-        return setCart(newCart);
-    }
-    setCart(prevState =>([
-        ...prevState,
+const initialState = []
+const reducer = (state, action) => {
+  const {type: actionType, payload: actionPayload} = action
+  switch(actionType){
+    case 'ADD_TO_CART':{
+      const {id} = actionPayload
+      const productCartIndex = state.findIndex(item => item.id === id);
+      if(productCartIndex>=0){
+        const newstate = structuredClone(state)
+        newstate[productCartIndex].quantity += 1;
+        return newstate;
+      }
+      return [
+        ...state,
         {
-            ...product, 
-            quantity: 1
+          ...actionPayload,
+          quantity: 1
         }
-    ]))
-  };
-
-  const removeFromCart = product => {
-    setCart(prevState => prevState.filter(item => item.id !== product.id));
+      ]
+    }
+    case 'REMOVE_FROM_CART':{
+      const {id} = actionPayload
+      return state.filter(item => item.id !== id)
+    }
+    case "CLEAR_CART":{
+      return initialState
+    }
   }
+  return state
+}
 
-  const clearCart = () => {
-      setCart([]);
-  }
+export function CartProvider ({ children }){
+  const [state, dispatch] = useReducer(reducer, initialState)
+  
+  const addToCart = (product) => dispatch({type: 'ADD_TO_CART', payload: product})
+
+  const removeFromCart = (product) => dispatch({type: 'REMOVE_FROM_CART', payload: product})
+
+  const clearCart = () => dispatch({type: 'CLEAR_CART'})
 
   return (
     <CartContext.Provider value={{ 
-      cart, 
+      cart:state, 
       addToCart, 
       removeFromCart,
       clearCart 
