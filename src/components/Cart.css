@@ -6,11 +6,12 @@
     right: 0px;
     top: 0px;
     width: 200px;
-    color: #FFF
+    color: #FFF;
+    z-index: 99;
 }
   
 .cart img {
-    aspect-ratio: 16/9;
+    aspect-ratio: 16/15;
     width: 100%;
 }
   
