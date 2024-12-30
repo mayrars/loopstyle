@@ -2,7 +2,7 @@ import { Badge } from "flowbite-react"
 import { useId } from "react"
 import { useCart } from "../hooks/useCart"
 
-function CartItem({images, price, title, quantity, addToCart}){
+function CartItem({images, price, title, quantity, addToCart, removeToCart}){
     let image = images[0].replaceAll('["','').replaceAll('"]','')
     return (
         <li>
@@ -11,6 +11,7 @@ function CartItem({images, price, title, quantity, addToCart}){
                 <strong>{title}</strong> - ${price}
             </div>
             <footer className="mt-2">
+                <button onClick={removeToCart} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-extrabold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-8 h-8">-</button>
                 <p className="text-base font-extrabold m-0 ">Qty: {quantity}</p>
                 <button onClick={addToCart} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-extrabold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-8 h-8">+</button>
             </footer>
@@ -20,7 +21,7 @@ function CartItem({images, price, title, quantity, addToCart}){
 
 export function Cart() {
     const cartCheckboxId = useId()
-    const { cart, clearCart, addToCart } =  useCart()
+    const { cart, clearCart, addToCart, removeToCart } =  useCart()
     const quantity = cart.reduce((acc, el)=> acc+el.quantity, 0)
     return (
     <>
@@ -38,6 +39,7 @@ export function Cart() {
                         <CartItem 
                         key={product.id}
                         addToCart={()=>addToCart(product)} 
+                        removeToCart={()=>removeToCart(product)}
                         {...product} /> 
                     ))
                 }

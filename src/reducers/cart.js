@@ -2,6 +2,7 @@ export const cartInitialState = JSON.parse(window.localStorage.getItem('cart')) 
 
 export const CART_ACTIONS_TYPES = {
     ADD_TO_CART: 'ADD_TO_CART',
+    REMOVE_TO_CART: 'REMOVE_TO_CART',
     REMOVE_FROM_CART: 'REMOVE_FROM_CART',
     CLEAR_CART: 'CLEAR_CART'
 }
@@ -42,6 +43,20 @@ export const cartReducer = (state, action) => {
       case CART_ACTIONS_TYPES.CLEAR_CART:{
         updateLocalStorage(cartInitialState)
         return cartInitialState
+      }
+      case CART_ACTIONS_TYPES.REMOVE_TO_CART:{
+        const {id} = actionPayload
+        const productCartIndex = state.findIndex(item => item.id === id);
+        if(productCartIndex>=0 && state[productCartIndex].quantity > 1){
+          const newState = structuredClone(state)
+          newState[productCartIndex].quantity -= 1;
+          updateLocalStorage(newState)
+          return newState
+        }
+        const newState = state.filter(item => item.id !== id)
+        updateLocalStorage(newState)
+        return newState
+        
       }
     }
     return state
