@@ -3,7 +3,11 @@ import { useId } from "react"
 import { useCart } from "../hooks/useCart"
 
 function CartItem({images, price, title, quantity, addToCart, removeToCart}){
-    let image = images[0].replaceAll('["','').replaceAll('"]','')
+    console.log(images)
+    let image = (Array.isArray(images) && images.length > 0 && images[0] && images[0] !== '')
+    ? images[0].replace(/^\["|"\]$/g, '')
+    : '';
+
     return (
         <li>
             <img src={image} alt={title}/>
@@ -37,7 +41,7 @@ export function Cart() {
                 {
                     cart.map( product => (
                         <CartItem 
-                        key={product.id}
+                        key={`Item-${product.id}`}
                         addToCart={()=>addToCart(product)} 
                         removeToCart={()=>removeToCart(product)}
                         {...product} /> 

@@ -5,8 +5,10 @@ import { Button, Spinner, Badge,TextInput} from "flowbite-react";
 import ImageGallery from "react-image-gallery";
 import '../../node_modules/react-image-gallery/styles/css/image-gallery.css'
 import { useState } from "react";
+import { useCart } from '../hooks/useCart.jsx'
 
 export default function Product(){
+    const {addToCart, removeFromCart, cart} = useCart()
     const [quantity, setQuantity] = useState(1);
     const incrementHandler = () => setQuantity((prevCount) => prevCount + 1);  
     const decrementHandler = () => setQuantity((prevCount) => prevCount>=2 ? prevCount - 1 : 1); 
@@ -19,7 +21,10 @@ export default function Product(){
             thumbnail: newImage
         };
     });
-
+    const productCart = product =>{
+        return cart.some(item => item.id === product.id)
+    }
+    const isProductInCart = data && productCart(data)
     const formattedPrice = data?.price
     ? data.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
     : '$0.00';
@@ -39,16 +44,16 @@ export default function Product(){
                             </div>
                             <p className="text-black dark:text-gray-400 mb-2">{data.description}</p>
                             <p className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-10">Price: {formattedPrice}</p>
-                            <div className="flex items-center mb-10">
+                            {/*<div className="flex items-center mb-10">
                                 <Button color="blue" className="rounded-none buttons" onClick={decrementHandler}>-</Button>
                                 <TextInput className="inputText rounded-none" id="quantity" type="text" required value={quantity}/>
                                 <Button color="blue" className="rounded-none buttons" onClick={incrementHandler}>+</Button>
-                            </div>
-                            <Button color="blue" pill size="lg">
+                            </div>*/}
+                            <Button color="blue" pill size="lg" onClick={()=>isProductInCart ? removeFromCart(data) : addToCart(data,quantity)}>
                                 <svg className="w-6 h-6 text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4"/>
                                 </svg>
-                                Add to cart
+                                {isProductInCart ? 'Remove from cart' : 'Add to cart'}
                             </Button>
                         </div>
                     </div>
