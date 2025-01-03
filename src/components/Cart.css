@@ -1,5 +1,5 @@
 .cart {
-    background: #000;
+    background: rgb(19, 19, 44);
     display: none;
     padding: 32px;
     position: fixed;
@@ -7,7 +7,7 @@
     top: 0px;
     width: 200px;
     color: #FFF;
-    z-index: 99;
+    z-index: 999;
 }
   
 .cart img {
