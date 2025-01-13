@@ -5,9 +5,12 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
+  <BrowserRouter basename='/loopstyle/' future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+    }}>
     <FiltersProvider>
-      <BrowserRouter>
         <App />
-      </BrowserRouter>
     </FiltersProvider>
+  </BrowserRouter>
 )
