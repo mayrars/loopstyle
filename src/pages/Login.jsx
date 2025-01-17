@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
+import { setToken } from "../Helpers/auth-helpers";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const Login = () => {
     const [options, setOptions] = useState({});
     const { data, loading, error } = useFetch(url, options);
     console.log(data)
+    console.log(error)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,11 +26,16 @@ const Login = () => {
           headers: {
             "Content-Type": "application/json",
             },
-            body: JSON.stringify({ formData})
+            body: JSON.stringify(formData)
         };
         console.log(requestOptions)
         setUrl("https://api.escuelajs.co/api/v1/auth/login");
         setOptions(requestOptions);
+        console.log(data)
+        if(data.access_token){
+            setToken(data.access_token)
+            return Navigate("/myspace")            
+        }
     };
 
     return (
@@ -90,6 +97,9 @@ const Login = () => {
                         {loading ? "Logging in..." : "Log In"}
                     </button>
                 </form>
+                {error && <p className="text-red-500 text-center mt-4">
+                    Error was found!
+                </p>}
                 {data && error!='' && (
                     <p className="text-green-500 text-center mt-4">
                         Login successful!
